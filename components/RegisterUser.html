@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../styles/RegisterUser.css">
+</head>
+<body>
+    <section class="form-section">
+        <div class="form-container">
+            <form  id="form">
+                <h1 class="form-heading">Create Account</h1>
+                <div class="box">
+                    <label for="username">UserName</label>
+                    <input type="text" autocomplete="off" name="username" id="username" placeholder="Enter Your Full Name" >
+
+                    <div class="error"></div>
+                </div>
+                <div class="box">
+                    <label for="useremail">Email</label>
+                    <input type="email" name="useremail" id="useremail" placeholder="Enter Your Email">
+
+                    <div class="error"></div>
+                </div>
+                <div class="box">
+                    <label for="userpassword">Password</label>
+                    <input type="password" name="userpassword" id="userpassword" placeholder="Enter Your password">
+                    <div class="error"></div>
+                </div>
+                <div class="box">
+                    <label for="Confirmpassword">Confirm Password</label>
+                    <input type="password" name="Confirmpassword" id="Confirmpassword" placeholder="Confirm Your password">
+                    <div class="error"></div>
+                </div>
+                <div class="buttons">
+                    <button id="submit-btn"type="button" >Sign Up</button>
+                    <button type="reset" >Reset</button>
+    
+                </div>
+                
+                <div class="loginlink">
+                    <a href="LoginUser.html"class="link" >Already have an account. Login</a>
+                </div>
+            </form>
+        </div>
+    </section>
+   <script src="../Src/RegisterUser.js"></script>
+</body>
+</html>

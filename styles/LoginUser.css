@@ -1,0 +1,156 @@
+@import url("https://fonts.googleapis.com/css2?family=Spartan:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+.form-section {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #63a69f;
+    background-image: url(../assets/Images/RegisterBG.jpg);
+    background-size: 100% 100%;
+}
+
+.form-container {
+    width: 30%;
+    min-width: 200px;
+    height: 60vh;
+    overflow: hidden;
+    display: flex;
+    z-index: 2;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    background: #481857;
+    transition: all 0.5s ease-in-out;
+    border-radius: 15px;
+    opacity: .9;
+}
+
+form {
+    width: 100%;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: all 0.5s ease-in-out;
+    background: #855e91;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    
+
+}
+
+form:hover {
+    transform: scale(1.02);
+}
+
+form h1 {
+    text-align: center;
+    font-size: 31px;
+    margin-bottom: 20px;
+    color: #32023b;
+    transition: font-size 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+form button {
+    display: inline;
+    width: 100px;
+    padding: .8rem 0;
+    background-color: #560666;
+    color: #f7f4f8;
+    font-family: 'cinzel';
+    border: 4px #50055f;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 20px 5px;
+    transition: 0.3s ease-in-out;
+}
+
+
+form button:hover {
+    background-color: #b952d3;
+    color: #610d72;
+    transform: scale(1.1);
+
+}
+
+.box {
+    display: flex;
+    flex-direction: column;
+    transition: 0.3s ease-in-out;
+}
+
+.box:hover {
+    transform: scale(1.02);
+}
+
+.box label {
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 5px;
+    color: #290231;
+    transition: 0.3s ease-in-out;
+}
+
+
+.box input {
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+    width: 100%;
+    font-size: 12px;
+    border: 1px solid #b9b9b9;
+    transition: border 0.3s ease-in-out;
+}
+
+.box input:focus {
+    outline: 0;
+    border: 2px solid #481857;
+}
+
+.box.success input {
+    border: 1px solid green;
+}
+
+.box.error input {
+    border: 1px solid red;
+}
+
+.box .error {
+    color: red;
+    font-size: 10px;
+    height: 15px;
+}
+
+.buttons,.loginlink {
+    margin: auto;
+   
+}
+.link {
+    font-family: 'lato', sans-serif;
+    font-size: .8rem;
+    color: #1d0122;
+    transition: color 0.3s ease-in-out, 0.3s ease-in-out;
+    align-items: center;
+    text-decoration: none;
+
+}
+
+.link:hover {
+    color: #ffffff;
+    font-size: 0.85rem;
+    
+}
+
+.form-container:hover {
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+ 
+}
