@@ -1,4 +1,34 @@
+ // Import the functions you need from the SDKs you need
+ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"
+ // TODO: Add SDKs for Firebase products that you want to use
+ // https://firebase.google.com/docs/web/setup#available-libraries
+ import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from  "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"
+ import{getFirestore, setDoc, doc} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js" // Your web app's Firebase configuration
+ const firebaseConfig = {
+   apiKey: "AIzaSyAzUtcwZ9iUoti3r_odFACoT2L69ilG_Qs",
+   authDomain: "quiz-app-e8737.firebaseapp.com",
+   databaseURL: "https://quiz-app-e8737-default-rtdb.firebaseio.com",
+   projectId: "quiz-app-e8737",
+   storageBucket: "quiz-app-e8737.appspot.com",
+   messagingSenderId: "488376516249",
+   appId: "1:488376516249:web:7b073ca83ee31c46b1c208"
+ };
+
+ // Initialize Firebase
+ const app = initializeApp(firebaseConfig);
+
+function showMessage(message, divId){
+    var messageDiv=document.getElementById(divId);
+    messageDiv.style.display="block";
+    messageDiv.innerHTML=message;
+    messageDiv.style.opacity=1;
+    setTimeout(function(){
+        messageDiv.style.opacity=0;
+    },5000);
+ }
+
 document.addEventListener("DOMContentLoaded", function () {
+    
     document.getElementById("submit-btn").addEventListener("click", validation);
 });
 
@@ -36,7 +66,7 @@ const passFormat = (p) => {
 };
 
 function validation() {
-    let user = document.getElementById("username").value.trim();
+    let userName = document.getElementById("username").value.trim();
     let mail = document.getElementById("useremail").value.trim();
     let pass1 = document.getElementById("userpassword").value.trim();
     let pass2 = document.getElementById("Confirmpassword").value.trim();
@@ -46,9 +76,9 @@ function validation() {
     setSuccess(document.getElementById("userpassword"));
     setSuccess(document.getElementById("Confirmpassword"));
 
-    if (user === "") {
+    if (userName === "") {
         setError(document.getElementById("username"), "Username is required");
-    } else if (!userFormat(user)) {
+    } else if (!userFormat(userName)) {
         setError(document.getElementById("username"), "Digits are not allowed in the username");
     }
 
@@ -71,8 +101,32 @@ function validation() {
     } else if (!passFormat(pass2)) {
         setError(document.getElementById("Confirmpassword"), "Password must meet the criteria");
     }
-   
-}  
 
-   
-    
+    const auth = getAuth();
+    const db = getFirestore();
+
+    createUserWithEmailAndPassword(auth, mail, pass1)
+        .then((userCredential) => {
+            const user = userCredential.user;
+            const userData = {
+                email: mail,
+                username: userName,
+            };
+            showMessage('Account Created Successfully', 'signUpMessage');
+            const docRef = doc(db, "users", user.uid);
+            return setDoc(docRef, userData);
+        })
+        .then(() => {
+            // Redirect after successful account creation
+            window.location.href = '/components/LoginUser.html';
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            if (errorCode === 'auth/email-already-in-use') {
+                showMessage('Email Address Already Exists !!!', 'signUpMessage');
+            } else {
+                showMessage('Unable to create User', 'signUpMessage');
+                console.error("Error creating user:", error);
+            }
+        });
+}
