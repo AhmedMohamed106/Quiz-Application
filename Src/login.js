@@ -3,7 +3,7 @@
  // TODO: Add SDKs for Firebase products that you want to use
  // https://firebase.google.com/docs/web/setup#available-libraries
  import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from  "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"
- import{getFirestore, setDoc, doc} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js" // Your web app's Firebase configuration
+ import{getFirestore, setDoc, doc , getDoc} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js" // Your web app's Firebase configuration
  const firebaseConfig = {
    apiKey: "AIzaSyAzUtcwZ9iUoti3r_odFACoT2L69ilG_Qs",
    authDomain: "quiz-app-e8737.firebaseapp.com",
@@ -52,7 +52,7 @@ const setSuccess = (ele) => {
     }
 };
 
-function validation(){
+  function validation(){
 
     let mail = document.getElementById("useremail").value.trim();
     let pass1 = document.getElementById("userpassword").value.trim();
@@ -64,7 +64,29 @@ function validation(){
         showMessage('login is successful', 'signInMessage')
         const user = userCredential.user;
         localStorage.setItem('LoggedInUserId' , user.uid);
-        window.location.href = '/components/homepage.html';
+
+        const userDocRef = (doc(db , 'users' , user.uid));
+        getDoc(userDocRef).then( (userDoc)=>{
+            if(userDoc.exists()){
+                const userData = userDoc.data();
+                const role = userData.role;
+
+                switch(role){
+                    case 'admin':
+                        window.location.href = "/components/dash.html";
+                    break;
+                    case 'student':
+                        window.location.href = '/components/studentHome.html';
+                    break;
+                    default:
+                        showMessage('Role is not defined', 'signInMessage');
+                    }
+            }
+            else{
+                showMessage('No such user!', 'signInMessage');
+            }
+
+        } )
     }).catch( (error)=> {
 
         const errorCode = error.code;

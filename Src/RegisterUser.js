@@ -70,7 +70,7 @@ function validation() {
     let mail = document.getElementById("useremail").value.trim();
     let pass1 = document.getElementById("userpassword").value.trim();
     let pass2 = document.getElementById("Confirmpassword").value.trim();
-    let Role = document.querySelector('input[name="role"]:checked').value;
+    //let Role = document.querySelector('input[name="role"]:checked').value;
 
     setSuccess(document.getElementById("username"));
     setSuccess(document.getElementById("useremail"));
@@ -102,9 +102,7 @@ function validation() {
     } else if (!passFormat(pass2)) {
         setError(document.getElementById("Confirmpassword"), "Password must meet the criteria");
     }
-    if (!Role) {
-        setError(document.getElementById("role-sec"), "please Select our role");
-    }
+   
 
     const auth = getAuth();
     const db = getFirestore();
