@@ -22,7 +22,7 @@
 .form-container {
     width: 30%;
     min-width: 200px;
-    height: 60vh;
+    height: 50vh;
     overflow: hidden;
     display: flex;
     z-index: 2;
@@ -166,3 +166,49 @@ form button:hover {
     animation:fadeOut 7s forwards;
 
 }
+
+/* Style for the role section */
+.role-section {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
+  /* Style for the role labels */
+  .role-label {
+    display: block;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .role-label:hover {
+    background: #f0f0f0;
+    border-color: #bbb;
+  }
+  
+  /* Style for the radio buttons */
+  .role-label input[type="radio"] {
+    margin-right: 10px;
+    accent-color: #4CAF50; /* Change the radio button color */
+  }
+  
+  /* Add some animation */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  .form-container {
+    animation: fadeIn 1s ease-in;
+  }
