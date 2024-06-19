@@ -1,0 +1,54 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../styles/Quizzes Interface.css">
+</head>
+<body>
+    <header>Quiz Application</header>
+
+    <div class="search-filter-container">
+        <input type="text" id="search-input" placeholder="Search quizzes...">
+        <select id="filter-select">
+            <option value="all">Select Category</option>
+            <option value="Javascript">Javascript</option>
+            <option value="C#">C#</option>
+            <option value="sql">SQL</option>
+            <option value="oop">OOP</option>
+        </select>
+    </div>
+    <main>
+        <div class="quiz-card" data-category="Javascript">
+            <h2>Quiz 1</h2>
+            <p>This is the description of Javascript quiz</p>
+            <button>Start Quiz</button>
+        </div>
+        <div class="quiz-card" data-category="C#">
+            <h2>Quiz 2</h2>
+            <p>This is the description of C# Quiz</p>
+            <button>Start Quiz</button>
+        </div>
+        <div class="quiz-card" data-category="C#">
+            <h2>Quiz 3</h2>
+            <p>This is the description of C# Quiz</p>
+            <button>Start Quiz</button>
+        </div>
+        <div class="quiz-card" data-category="sql">
+            <h2>Quiz 4</h2>
+            <p>This is the description of SQL Quiz</p>
+            <button>Start Quiz</button>
+        </div>
+        <div class="quiz-card" data-category="oop">
+            <h2>Quiz 5</h2>
+            <p>This is the description of OOP Quiz</p>
+            <button>Start Quiz</button>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Quiz Application. All rights reserved.</p>
+    </footer>
+
+    <script src="../Src/Quizzes Interface.js"></script>
+</body>
+</html>
