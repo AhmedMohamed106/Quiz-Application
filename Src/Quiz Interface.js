@@ -31,6 +31,10 @@ document.addEventListener("DOMContentLoaded", function() {
     const nextBtn = document.getElementById("next-btn");
     const submitBtn = document.getElementById("submit-btn");
     const timerElement = document.getElementById("timer");
+    const resultsContainer = document.getElementById("results-container");
+    const correctAnswersElement = document.getElementById("correct-answers");
+    const incorrectAnswersElement = document.getElementById("incorrect-answers");
+    const totalScoreElement = document.getElementById("total-score");
 
     let quizDuration = questions.length * 1 * 60; // 5 minutes in seconds
     let timerInterval;
@@ -87,13 +91,25 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function calculateScore() {
-        let score = 0;
+        let correctCount = 0;
+        let incorrectCount = 0;
+
         isCorrect.forEach(correct => {
             if (correct) {
-                score++;
+                correctCount++;
+            } else {
+                incorrectCount++;
             }
         });
-        alert(`Your total score is: ${(score/questions.length)*100}%`);
+
+        correctAnswersElement.textContent = `Correct Answers: ${correctCount}`;
+        incorrectAnswersElement.textContent = `Incorrect Answers: ${incorrectCount}`;
+        totalScoreElement.textContent = `Total Score: ${correctCount} out of ${questions.length}`;
+
+        document.querySelector('.quiz-container').style.display = 'none';
+        timerElement.style.display = 'none'
+        document.getElementById('home').style.display = 'block'
+        resultsContainer.style.display = 'block';
     }
 
     function updateNavigationButtons() {

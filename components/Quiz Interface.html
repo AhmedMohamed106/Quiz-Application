@@ -19,11 +19,19 @@
             </div>
             <div class="navigation-controls">
                 <button id="prev-btn" class="nav-btn" disabled>Previous</button>
-                <button id="submit-btn">Submit</button>
+                <button id="submit-btn" class="btn">Submit</button>
                 <button id="next-btn" class="nav-btn">Next</button>
             </div>
         </div>
+        <div class="results-container" id="results-container" style="display: none;">
+            <h2>Quiz Results</h2>
+            <br>
+            <p id="correct-answers"></p>
+            <p id="incorrect-answers"></p>
+            <p id="total-score"></p>
+        </div>
     </main>
+    <button id="home" style="display: none; margin-bottom: 2rem;" class="btn">Return To Home</button>
     <footer>
         <p>&copy; 2024 Quiz Application. All rights reserved.</p>
     </footer>

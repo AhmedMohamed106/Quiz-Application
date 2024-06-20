@@ -97,7 +97,7 @@ main {
     background-color: #45a049;
 }
 
-#submit-btn {
+.btn {
     background-color: #008CBA;
     color: white;
     border-radius: 5px;
@@ -107,7 +107,7 @@ main {
     cursor: pointer;
 }
 
-#submit-btn:hover {
+.btn:hover {
     background-color: #007bb5;
 }
 
@@ -115,6 +115,23 @@ main {
     font-size: 20px;
     font-weight: bold;
     margin-top: 10px;
+}
+
+.results-container {
+    margin-top: 20px;
+    padding: 100px;
+    border: none;
+    border-radius: 10px;
+    background-color: #eda8e4;
+}
+
+.results-container h2 {
+
+}
+
+.results-container p {
+    font-size: 18px;
+    margin: 5px 0;
 }
 
 footer {
