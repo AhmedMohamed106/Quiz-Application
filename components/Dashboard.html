@@ -62,13 +62,14 @@
             <!--Navigation Top-->
             <div class="topbar">
                 <div class="toggle" onclick="toogleMenu()"></div>
-                <div class="search">
+                <!--<div class="search">
                     <label for="">
                         <input type="text" placeholder="Search here">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </label>
 
                 </div>
+            -->
                 <div class="user">
                     <img src="../assets/Images/user.jpg" alt="kll">
                 </div>
@@ -103,6 +104,13 @@
                 <div class="recentQuizes">
                     <div class="cardHeader">
                         <h2>Recent Quizes</h2>
+                        <div class="search">
+                            <label for="">
+                                <input id="category-search" type="text" placeholder="Search by subject">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </label>
+        
+                        </div>
                     </div>
                     <table id="quizzes-table">
                         <thead>
@@ -120,6 +128,14 @@
                 <div class="recentStudent">
                     <div class="cardHeader">
                         <h2>Recent Students</h2>
+                        <!--<div class="search">
+                            <label for="">
+                                <input type="text" id="username-search" placeholder="Search by username" style="width:200px;margin-right: 0px;">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </label>
+        
+                        </div>
+                    -->
                         
                     </div>
                     <table id="students-table" bordered>
