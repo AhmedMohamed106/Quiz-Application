@@ -113,11 +113,16 @@ function validation() {
             const userData = {
                 email: mail,
                 username: userName,
-                role : "student"
+                role : "student",
+                quizzes: []
             };
+
+
             showMessage('Account Created Successfully', 'signUpMessage');
             const docRef = doc(db, "users", user.uid);
+            localStorage.setItem("LoggedInUserId" , user.uid)
             return setDoc(docRef, userData);
+
         })
         .then(() => {
             // Redirect after successful account creation

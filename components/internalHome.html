@@ -42,7 +42,7 @@
                     <a class="nav-link" href="#">  <i class="fa-solid fa-house"></i> Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="history.html" > <i class="fa-solid fa-book"></i>History</a>
+                    <a class="nav-link" href="../components/Quizzes Interface.html" >  <i class="fa-solid fa-pen"></i> take a quiz</a>
                 </li>
                 
                 
@@ -52,66 +52,23 @@
         </div>
     </nav>
     <div class="container mt-5">
-        <table class="table table-striped">
+ 
+        <div class="card" style="text-align: center; justify-content: center;">
+            <h2> your Quiz History</h2>
+        </div>
+        <table class="table table-striped" id="quiz-table">
             <thead>
                 <tr>
-                    <th>S.N.</th>
-                    <th>Topic</th>
-                    <th>Total question</th>
-                    <th>Marks</th>
-                    <th>Time limit</th>
-                    <th>Action</th>
+                    <th>Number</th>
+                    <th>Category</th>
+                    <th>Questions No.</th>
+                    <th>Score</th>
+                    <th>Result</th>
+                    <th>Date</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td><a href="#">Linux </a></td>
-                    <td>5</td>
-                    <td>10</td>
-                    <td>10 min</td>
-                    <td><button class="btn btn-danger">Restart</button></td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Linux</td>
-                    <td>5</td>
-                    <td>10</td>
-                    <td>10 min</td>
-                    <td><button class="btn btn-success">Start</button></td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Networking</td>
-                    <td>2</td>
-                    <td>4</td>
-                    <td>5 min</td>
-                    <td><button class="btn btn-success">Start</button></td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>C++ Coding</td>
-                    <td>2</td>
-                    <td>4</td>
-                    <td>5 min</td>
-                    <td><button class="btn btn-success">Start</button></td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>Php Coding</td>
-                    <td>2</td>
-                    <td>4</td>
-                    <td>5 min</td>
-                    <td><button class="btn btn-danger">Restart</button></td>
-                </tr>
-                <tr>
-                    <td>6</td>
-                    <td>Linux : File Management</td>
-                    <td>2</td>
-                    <td>4</td>
-                    <td>5 min</td>
-                    <td><button class="btn btn-success">Start</button></td>
-                </tr>
+                <!-- Quiz data will be inserted here -->
             </tbody>
         </table>
     </div>

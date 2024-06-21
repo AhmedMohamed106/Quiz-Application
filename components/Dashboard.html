@@ -33,12 +33,6 @@
                 </li>
                 <li>
                     <a href="#">
-                        <span class="icons"><i class="fa-solid fa-chalkboard-user"></i></span>
-                        <span class="title">Teacher</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
                         <span class="icons"><i class="fa-solid fa-user-graduate"></i></span>
                         <span class="title">Student</span>
                     </a>
@@ -50,15 +44,15 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="../components/createQuiz.html">
                         <span class="icons"><i class="fa-solid fa-circle-plus"></i></span>
-                        <span class="title">Add Quiz</span>
+                        <span  id="add-quiz" class="title">Add Quiz</span>
                     </a>
                 </li>
                 <li>
                     <a href="#">
                         <span class="icons"><i class="fa-solid fa-right-from-bracket"></i></span>
-                        <span class="title">Log Out</span>
+                        <span id="logout" class="title">Log Out</span>
                     </a>
                 </li>
             </ul>
@@ -83,21 +77,14 @@
             <div class="cardBox">
                 <div class="card">
                     <div>
-                        <div class="numbers">23</div>
+                        <div class="numbers"></div>
                         <div class="cardName">Total Students</div>
                     </div>
                     <div class="iconBox"><i class="fa-solid fa-user-graduate"></i></div>
                 </div>
                 <div class="card">
                     <div>
-                        <div class="numbers">10</div>
-                        <div class="cardName">Total Teacher</div>
-                    </div>
-                    <div class="iconBox"><i class="fa-solid fa-chalkboard-user"></i></div>
-                </div>
-                <div class="card">
-                    <div>
-                        <div class="numbers">23</div>
+                        <div class="numbers" id="n-ofQuizes"></div>
                         <div class="cardName">Total Quizes</div>
                     </div>
                     <div class="iconBox"><i class="fa-solid fa-circle-question"></i></div>
@@ -116,9 +103,8 @@
                 <div class="recentQuizes">
                     <div class="cardHeader">
                         <h2>Recent Quizes</h2>
-                        <a href="#" class="btn">View All</a>
                     </div>
-                    <table>
+                    <table id="quizzes-table">
                         <thead>
                             <tr>
                                 <td>Number</td>
@@ -127,31 +113,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                           <tr>
-                            <td>1</td>
-                            <td>C#</td>
-                            <td>60 M</td>
-                           </tr>
-                           <tr>
-                            <td>2</td>
-                            <td>JS</td>
-                            <td>60 M</td>
-                           </tr>
-                           <tr>
-                            <td>3</td>
-                            <td>SQL</td>
-                            <td>60 M</td>
-                           </tr>
-                           <tr>
-                            <td>4</td>
-                            <td>SQL</td>
-                            <td>60 M</td>
-                           </tr>
-                           <tr>
-                            <td>5</td>
-                            <td>SQL</td>
-                            <td>60 M</td>
-                           </tr>
+                          
                         </tbody>
                     </table>
                 </div>
@@ -160,25 +122,17 @@
                         <h2>Recent Students</h2>
                         
                     </div>
-                    <table>
-                        
+                    <table id="students-table" bordered>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th> Quizzes Taken</th>
+                            </tr>
+                        </thead>
                         <tbody>
-                           <tr>
-                            <td width="60px"><div class="imgBx"><img src="../assets/Images/user.jpg" alt=""></div></td>
-                            <td><h4>Enas</h4></td>
-                           </tr>
-                           <tr>
-                            <td width="60px"><div class="imgBx"><img src="../assets/Images/user.jpg" alt=""></div></td>
-                            <td><h4>Enas</h4></td>
-                           </tr> <tr>
-                            <td width="60px"><div class="imgBx"><img src="../assets/Images/user.jpg" alt=""></div></td>
-                            <td><h4>Enas</h4></td>
-                           </tr> <tr>
-                            <td width="60px"><div class="imgBx"><img src="../assets/Images/user.jpg" alt=""></div></td>
-                            <td><h4>Enas</h4></td>
-                           </tr>
+                            <!-- Student rows will be appended here by JavaScript -->
                         </tbody>
-
                     </table>
                 </div>
                 
@@ -199,6 +153,8 @@
             topbar.classList.toggle('active')
         }
     </script>
+    <script type="module" src="../Src/dashbord.js"></script>
+    <script type="module" src="../Src/internalhome.js"></script>
 </body>
 
 </html>

@@ -3,7 +3,7 @@
  // TODO: Add SDKs for Firebase products that you want to use
  // https://firebase.google.com/docs/web/setup#available-libraries
  import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from  "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"
- import { getFirestore, collection, getDocs, setDoc, doc,getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+ import { getFirestore, collection, getDocs, setDoc, doc,getDoc , arrayUnion,updateDoc, query , where} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
  const firebaseConfig = {
    apiKey: "AIzaSyAzUtcwZ9iUoti3r_odFACoT2L69ilG_Qs",
    authDomain: "quiz-app-e8737.firebaseapp.com",
@@ -31,7 +31,7 @@ export {
   collection,
   getDocs,
   setDoc,
-  doc,getDoc
+  doc,getDoc,query, where , updateDoc,arrayUnion
 };
 
 
