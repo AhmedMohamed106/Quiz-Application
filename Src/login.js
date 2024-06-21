@@ -73,7 +73,7 @@ const setSuccess = (ele) => {
 
                 switch(role){
                     case 'admin':
-                        window.location.href = "/components/dash.html";
+                        window.location.href = "../components/Dashboard.html";
                     break;
                     case 'student':
                         window.location.href = '../components/internalHome.html';
