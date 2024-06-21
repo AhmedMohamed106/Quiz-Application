@@ -1,0 +1,53 @@
+body {
+    font-family: Arial, sans-serif;
+}
+nav{
+  background-color: purple !important;
+  color: #fff;
+}
+
+.navbar {
+    padding: 15px;
+
+}
+
+#subNavbar {
+    display: flex;
+    justify-content: space-between;
+    /* align-items: center; */
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.navbar-text {
+    font-size: 16px;
+    color: #fff;
+}
+
+.table thead th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
+
+.table tbody tr td a {
+    color: black;
+    font-weight: bold;
+}
+
+.table tbody tr td a:hover {
+    text-decoration: none;
+}
+
+.btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+/* /////////////////////////////////// */
