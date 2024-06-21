@@ -59,33 +59,28 @@ function generateQuestionForms(numQuestions) {
     for (let i = 0; i < numQuestions; i++) {
         const questionForm = document.createElement('div');
         questionForm.innerHTML = `
-            <div class="card-header bg-primary text-white">
-                <h5 class="mb-0">Question ${i + 1}</h5>
+            <div class="card-header text-align-center">
+                <h5 class="mb-0 py-2">Question ${i + 1}</h5>
             </div>
             <div class="card-body">
                 <div class="form-group">
-                    <label for="question${i}">Question:</label>
-                    <textarea class="form-control" id="question${i}" name="question${i}" rows="3" required></textarea>
+                    <textarea class="form-control" id="question${i}" placeholder="question" name="question${i}" rows="3" required></textarea>
+                </div>
+                <div class="form-group">               
+                    <input type="text" class="form-control" id="optionA${i}" placeholder="option A" name="optionA${i}" required>
+                </div>
+                <div class="form-group">               
+                    <input type="text" class="form-control" id="optionB${i}" placeholder="option B" name="optionB${i}" required>
                 </div>
                 <div class="form-group">
-                    <label for="optionA${i}">Option A:</label>
-                    <input type="text" class="form-control" id="optionA${i}" name="optionA${i}" required>
+                    <input type="text" class="form-control" id="optionC${i}" placeholder="option C" name="optionC${i}" required>
                 </div>
                 <div class="form-group">
-                    <label for="optionB${i}">Option B:</label>
-                    <input type="text" class="form-control" id="optionB${i}" name="optionB${i}" required>
+                    <input type="text" class="form-control" id="optionD${i}" placeholder="option D" name="optionD${i}" required>
                 </div>
                 <div class="form-group">
-                    <label for="optionC${i}">Option C:</label>
-                    <input type="text" class="form-control" id="optionC${i}" name="optionC${i}" required>
-                </div>
-                <div class="form-group">
-                    <label for="optionD${i}">Option D:</label>
-                    <input type="text" class="form-control" id="optionD${i}" name="optionD${i}" required>
-                </div>
-                <div class="form-group">
-                    <label for="correctAnswer${i}">Correct Answer:</label>
-                    <select class="form-control" id="correctAnswer${i}" name="correctAnswer${i}">
+                  
+                    <select class="form-control" id="correctAnswer${i}" "placeholder="Correct Answer" name="correctAnswer${i}">
                         <option value="A">A</option>
                         <option value="B">B</option>
                         <option value="C">C</option>
@@ -100,7 +95,8 @@ function generateQuestionForms(numQuestions) {
     document.getElementById('submitQuestions').addEventListener('click', submitQuestions);
 }
 
-function submitQuestions() {
+function submitQuestions(event) {
+    event.preventDefault();
     const currentQuizId = localStorage.getItem('currentQuizId');
     const questionsContainer = document.getElementById('questionsContainer');
     const questions = [];
