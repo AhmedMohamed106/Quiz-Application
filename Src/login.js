@@ -76,7 +76,7 @@ const setSuccess = (ele) => {
                         window.location.href = "/components/dash.html";
                     break;
                     case 'student':
-                        window.location.href = '/components/studentHome.html';
+                        window.location.href = '../components/internalHome.html';
                     break;
                     default:
                         showMessage('Role is not defined', 'signInMessage');

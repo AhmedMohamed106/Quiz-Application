@@ -8,33 +8,7 @@ import {
     const searchInput = document.getElementById("search-input");
     const filterSelect = document.getElementById("filter-select");
     //const quizCards = document.querySelectorAll(".quiz-card");
-    function fetchCategories() {
-        const categoriesSet = new Set();
-        try {
-            const querySnapshot = getDocs(collection(firestore, 'quizzes'));
-            querySnapshot.forEach((doc) => {
-                const quiz = doc.data();
-                if (quiz.category) {
-                    categoriesSet.add(quiz.category);
-                }
-            });
-        } catch (error) {
-            console.error("Error fetching categories: ", error);
-        }
-        return Array.from(categoriesSet);
-    }
-
-     function populateCategoryDropdown() {
-        const categories =  fetchCategories();
-        filterSelect.innerHTML = '<option value="all">All Categories</option>';
-        categories.forEach((category) => {
-            const option = document.createElement("option");
-            option.value = category.toLowerCase();
-            option.textContent = category;
-            filterSelect.appendChild(option);
-        });
-    }
-
+    
 
     function filterQuizzes() {
         const searchText = searchInput.value.toLowerCase();
@@ -55,6 +29,38 @@ import {
             }
         });
     }
+
+    function fetchCategories() {
+        const categoriesSet = new Set();
+        return getDocs(collection(firestore, 'quizzes'))
+            .then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+                    const quiz = doc.data();
+                    if (quiz.category) {
+                        categoriesSet.add(quiz.category);
+                    }
+                });
+                return Array.from(categoriesSet);
+            })
+            .catch(error => {
+                console.error("Error fetching categories: ", error);
+                return [];
+            });
+    }
+    
+    function populateCategoryDropdown() {
+        fetchCategories().then(categories => {
+            const filterSelect = document.getElementById('filter-select');
+            filterSelect.innerHTML = '<option value="all">All Categories</option>';
+            categories.forEach((category) => {
+                const option = document.createElement("option");
+                option.value = category.toLowerCase();
+                option.textContent = category;
+                filterSelect.appendChild(option);
+            });
+        });
+    }
+
     function loadQuizzes() {
         const quizzesContainer = document.querySelector('.quiz-card');
         
@@ -89,7 +95,6 @@ import {
 
 document.addEventListener('DOMContentLoaded', function (){
     populateCategoryDropdown();
-
     loadQuizzes();
 
 });
