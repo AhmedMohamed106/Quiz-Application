@@ -1,4 +1,4 @@
-import { getFirestore, collection, addDoc, doc, setDoc , updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, collection, addDoc, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
  // Import the functions you need from the SDKs you need
  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"
  const firebaseConfig = {
@@ -11,7 +11,7 @@ import { getFirestore, collection, addDoc, doc, setDoc , updateDoc } from "https
    appId: "1:488376516249:web:7b073ca83ee31c46b1c208"
  };
 
- const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 
 const firestore = getFirestore();
 
@@ -19,7 +19,7 @@ document.getElementById('quizForm').addEventListener('submit', createQuiz);
 
 function createQuiz(event) {
     event.preventDefault();
-    
+
     const title = document.getElementById('title').value;
     const numQuestions = document.getElementById('numQuestions').value;
     const marks = document.getElementById('marks').value;
@@ -27,7 +27,7 @@ function createQuiz(event) {
     const timeLimit = document.getElementById('timeLimit').value;
     const category = document.getElementById('category').value;
     const description = document.getElementById('description').value;
-    
+
     const quizData = {
         title,
         numQuestions,
@@ -52,40 +52,35 @@ function createQuiz(event) {
 function generateQuestionForms(numQuestions) {
     document.getElementById('quizForm').classList.add('hidden');
     document.getElementById('questionForms').classList.remove('hidden');
-    
+
     const questionsContainer = document.getElementById('questionsContainer');
     questionsContainer.innerHTML = '';
 
     for (let i = 0; i < numQuestions; i++) {
         const questionForm = document.createElement('div');
         questionForm.innerHTML = `
-            <div class="card-header bg-primary text-white">
-                <h5 class="mb-0">Question ${i + 1}</h5>
+            <div class="card-header text-align-center">
+                <h5 class="mb-0 py-2">Question ${i + 1}</h5>
             </div>
             <div class="card-body">
                 <div class="form-group">
-                    <label for="question${i}">Question:</label>
-                    <textarea class="form-control" id="question${i}" name="question${i}" rows="3" required></textarea>
+                    <textarea class="form-control" id="question${i}" placeholder="question" name="question${i}" rows="3" required></textarea>
+                </div>
+                <div class="form-group">               
+                    <input type="text" class="form-control" id="optionA${i}" placeholder="option A" name="optionA${i}" required>
+                </div>
+                <div class="form-group">               
+                    <input type="text" class="form-control" id="optionB${i}" placeholder="option B" name="optionB${i}" required>
                 </div>
                 <div class="form-group">
-                    <label for="optionA${i}">Option A:</label>
-                    <input type="text" class="form-control" id="optionA${i}" name="optionA${i}" required>
+                    <input type="text" class="form-control" id="optionC${i}" placeholder="option C" name="optionC${i}" required>
                 </div>
                 <div class="form-group">
-                    <label for="optionB${i}">Option B:</label>
-                    <input type="text" class="form-control" id="optionB${i}" name="optionB${i}" required>
+                    <input type="text" class="form-control" id="optionD${i}" placeholder="option D" name="optionD${i}" required>
                 </div>
                 <div class="form-group">
-                    <label for="optionC${i}">Option C:</label>
-                    <input type="text" class="form-control" id="optionC${i}" name="optionC${i}" required>
-                </div>
-                <div class="form-group">
-                    <label for="optionD${i}">Option D:</label>
-                    <input type="text" class="form-control" id="optionD${i}" name="optionD${i}" required>
-                </div>
-                <div class="form-group">
-                    <label for="correctAnswer${i}">Correct Answer:</label>
-                    <select class="form-control" id="correctAnswer${i}" name="correctAnswer${i}">
+                  
+                    <select class="form-control" id="correctAnswer${i}" "placeholder="Correct Answer" name="correctAnswer${i}">
                         <option value="A">A</option>
                         <option value="B">B</option>
                         <option value="C">C</option>
@@ -96,7 +91,7 @@ function generateQuestionForms(numQuestions) {
         `;
         questionsContainer.appendChild(questionForm);
     }
-    
+
     document.getElementById('submitQuestions').addEventListener('click', submitQuestions);
 }
 
@@ -107,13 +102,18 @@ function submitQuestions() {
 
     for (let i = 0; i < questionsContainer.children.length; i++) {
         const questionForm = questionsContainer.children[i];
-        const question = document.getElementById(`question${i}`).value;
-        const optionA = document.getElementById(`optionA${i}`).value;
-        const optionB = document.getElementById(`optionB${i}`).value;
-        const optionC = document.getElementById(`optionC${i}`).value;
-        const optionD = document.getElementById(`optionD${i}`).value;
-        const correctAnswer = document.getElementById(`correctAnswer${i}`).value;
+        const question = document.getElementById(`question${i}`).value.trim();
+        const optionA = document.getElementById(`optionA${i}`).value.trim();
+        const optionB = document.getElementById(`optionB${i}`).value.trim();
+        const optionC = document.getElementById(`optionC${i}`).value.trim();
+        const optionD = document.getElementById(`optionD${i}`).value.trim();
+        const correctAnswer = document.getElementById(`correctAnswer${i}`).value.trim();
 
+
+        if (!question || !optionA || !optionB || !optionC || !optionD || !correctAnswer) {
+            alert(`Please fill out all fields for question ${i + 1}`);
+            return;
+        }
         questions.push({
             question,
             options: { A: optionA, B: optionB, C: optionC, D: optionD },
