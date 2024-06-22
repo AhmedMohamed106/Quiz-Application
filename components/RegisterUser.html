@@ -1,52 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="../styles/RegisterUser.css">
+    <link rel="stylesheet" href="../styles/LogAndResg.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="../styles/RegisterUser.css"> -->
 </head>
 <body>
-    <section class="form-section">
-        <div class="form-container">
-            <form  id="form">
-                <div id="signUpMessage" class="messageDiv" style="display:none;"></div>
-                <h1 class="form-heading">Create Account</h1>
-                <div class="box">
-                    <label for="username">UserName</label>
-                    <input type="text" autocomplete="off" name="username" id="username" placeholder="Enter Your Full Name" >
-
-                    <div class="error"></div>
-                </div>
-                <div class="box">
-                    <label for="useremail">Email</label>
-                    <input type="email" name="useremail" id="useremail" placeholder="Enter Your Email">
-
-                    <div class="error"></div>
-                </div>
-                <div class="box">
-                    <label for="userpassword">Password</label>
-                    <input type="password" name="userpassword" id="userpassword" placeholder="Enter Your password">
-                    <div class="error"></div>
-                </div>
-                <div class="box">
-                    <label for="Confirmpassword">Confirm Password</label>
-                    <input type="password" name="Confirmpassword" id="Confirmpassword" placeholder="Confirm Your password">
-                    <div class="error"></div>
-                </div>
-
-                   
-                <div class="buttons">
-                    <button id="submit-btn"type="button" >Sign Up</button>
-                    <button type="reset" >Reset</button>
-                </div>
-                
-                <div class="loginlink">
-                    <a href="LoginUser.html"class="link" >Already have an account. Login</a>
-                </div>
-            </form>
+    <div class="container">
+        <input type="checkbox" id="flip">
+        <div class="cover">
+          <div class="front">
+            <img src="../assets/Images/frontImg.jpg" alt="">
+            <div class="text">
+              <span class="text-1">Every new friend is a <br> new adventure</span>
+              <span class="text-2">Let's get connected</span>
+            </div>
+          </div>
+          <div class="back">
+            <img class="backImg" src="../assets/Images/backImg.jpg" alt="">
+            <div class="text">
+              <span class="text-1">Complete miles of journey <br> with one step</span>
+              <span class="text-2">Let's get started</span>
+            </div>
+          </div>
         </div>
-    </section>
+        <div class="forms">
+            <div class="form-content">
+            
+            <div class="signup-form">
+              <div class="title">Signup</div>
+            <form id="form" >
+                <div id="signUpMessage" class="messageDiv" style="display:none;"></div>
+                <div class="input-boxes">
+                  <div class="input-box">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="username" placeholder="Enter your name" required>
+                    <div class="error"></div>
+                  </div>
+                  <div class="input-box">
+                    <i class="fas fa-envelope"></i>
+                    <input type="text" id="useremail" placeholder="Enter your email" required>
+                    <div class="error"></div>
+                  </div>
+                  <div class="input-box">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="userpassword" placeholder="Enter your password" required>
+                    <div class="error"></div>
+                  </div>
+                  <div class="input-box">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="Confirmpassword" placeholder="Confirm Password" required>
+                    <div class="error"></div>
+                  </div>
+                  <div class="button input-box">
+                    <button id="submit-btn" type="button" >Sign UP</button>
+                  </div>
+                  <div class="text sign-up-text">Already have an account? <a href="../components/LoginUser.html">Login now</a> </div>
+                </div>
+          </form>
+        </div>
+        </div>
+        </div>
+      </div>
+      
+  
    <script type="module" src="../Src/RegisterUser.js"></script>
 </body>
 </html>

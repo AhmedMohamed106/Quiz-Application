@@ -5,7 +5,7 @@
 }
 body{
     background-image: url("../assets/Images/crudQuiz.jpg");
-    background-size: 100% 100%;
+    background-size: cover;
 }
 .container{
    margin-top:50px  ;

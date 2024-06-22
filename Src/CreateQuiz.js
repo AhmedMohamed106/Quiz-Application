@@ -1,17 +1,17 @@
 import { getFirestore, collection, addDoc, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
- // Import the functions you need from the SDKs you need
- import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"
- const firebaseConfig = {
-   apiKey: "AIzaSyAzUtcwZ9iUoti3r_odFACoT2L69ilG_Qs",
-   authDomain: "quiz-app-e8737.firebaseapp.com",
-   databaseURL: "https://quiz-app-e8737-default-rtdb.firebaseio.com",
-   projectId: "quiz-app-e8737",
-   storageBucket: "quiz-app-e8737.appspot.com",
-   messagingSenderId: "488376516249",
-   appId: "1:488376516249:web:7b073ca83ee31c46b1c208"
- };
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"
+const firebaseConfig = {
+    apiKey: "AIzaSyAzUtcwZ9iUoti3r_odFACoT2L69ilG_Qs",
+    authDomain: "quiz-app-e8737.firebaseapp.com",
+    databaseURL: "https://quiz-app-e8737-default-rtdb.firebaseio.com",
+    projectId: "quiz-app-e8737",
+    storageBucket: "quiz-app-e8737.appspot.com",
+    messagingSenderId: "488376516249",
+    appId: "1:488376516249:web:7b073ca83ee31c46b1c208"
+};
 
- const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 
 const firestore = getFirestore();
 
@@ -19,7 +19,7 @@ document.getElementById('quizForm').addEventListener('submit', createQuiz);
 
 function createQuiz(event) {
     event.preventDefault();
-    
+
     const title = document.getElementById('title').value;
     const numQuestions = document.getElementById('numQuestions').value;
     const marks = document.getElementById('marks').value;
@@ -27,7 +27,7 @@ function createQuiz(event) {
     const timeLimit = document.getElementById('timeLimit').value;
     const category = document.getElementById('category').value;
     const description = document.getElementById('description').value;
-    
+
     const quizData = {
         title,
         numQuestions,
@@ -52,7 +52,7 @@ function createQuiz(event) {
 function generateQuestionForms(numQuestions) {
     document.getElementById('quizForm').classList.add('hidden');
     document.getElementById('questionForms').classList.remove('hidden');
-    
+
     const questionsContainer = document.getElementById('questionsContainer');
     questionsContainer.innerHTML = '';
 
@@ -91,25 +91,29 @@ function generateQuestionForms(numQuestions) {
         `;
         questionsContainer.appendChild(questionForm);
     }
-    
+
     document.getElementById('submitQuestions').addEventListener('click', submitQuestions);
 }
 
-function submitQuestions(event) {
-    event.preventDefault();
+function submitQuestions() {
     const currentQuizId = localStorage.getItem('currentQuizId');
     const questionsContainer = document.getElementById('questionsContainer');
     const questions = [];
 
     for (let i = 0; i < questionsContainer.children.length; i++) {
         const questionForm = questionsContainer.children[i];
-        const question = document.getElementById(`question${i}`).value;
-        const optionA = document.getElementById(`optionA${i}`).value;
-        const optionB = document.getElementById(`optionB${i}`).value;
-        const optionC = document.getElementById(`optionC${i}`).value;
-        const optionD = document.getElementById(`optionD${i}`).value;
-        const correctAnswer = document.getElementById(`correctAnswer${i}`).value;
+        const question = document.getElementById(`question${i}`).value.trim();
+        const optionA = document.getElementById(`optionA${i}`).value.trim();
+        const optionB = document.getElementById(`optionB${i}`).value.trim();
+        const optionC = document.getElementById(`optionC${i}`).value.trim();
+        const optionD = document.getElementById(`optionD${i}`).value.trim();
+        const correctAnswer = document.getElementById(`correctAnswer${i}`).value.trim();
 
+
+        if (!question || !optionA || !optionB || !optionC || !optionD || !correctAnswer) {
+            alert(`Please fill out all fields for question ${i + 1}`);
+            return;
+        }
         questions.push({
             question,
             options: { A: optionA, B: optionB, C: optionC, D: optionD },

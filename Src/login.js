@@ -54,8 +54,8 @@ const setSuccess = (ele) => {
 
   function validation(){
 
-    let mail = document.getElementById("useremail").value.trim();
-    let pass1 = document.getElementById("userpassword").value.trim();
+    let mail = document.getElementById("userLemail").value.trim();
+    let pass1 = document.getElementById("userLpassword").value.trim();
 
     const auth = getAuth();
     const db = getFirestore();
