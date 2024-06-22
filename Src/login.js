@@ -63,7 +63,8 @@ const setSuccess = (ele) => {
     signInWithEmailAndPassword(auth , mail , pass1).then((userCredential)=>{
         showMessage('login is successful', 'signInMessage')
         const user = userCredential.user;
-        localStorage.setItem('LoggedInUserId' , user.uid);
+        localStorage.setItem('loggedInUserId' , user.uid);
+        
 
         const userDocRef = (doc(db , 'users' , user.uid));
         getDoc(userDocRef).then( (userDoc)=>{
@@ -73,9 +74,11 @@ const setSuccess = (ele) => {
 
                 switch(role){
                     case 'admin':
+                        localStorage.setItem('loggedInUserId' , user.uid);
                         window.location.href = "../components/Dashboard.html";
                     break;
                     case 'student':
+                        localStorage.setItem('loggedInUserId' , user.uid);
                         window.location.href = '../components/internalHome.html';
                     break;
                     default:

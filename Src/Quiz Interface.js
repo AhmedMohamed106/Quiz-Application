@@ -4,7 +4,7 @@ import {
     firestore,
     getDoc,
     doc,
-    updateDoc,arrayUnion
+    updateDoc,arrayUnion,serverTimestamp
 } from "../Src/FirebaseConfig.js";
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -163,7 +163,7 @@ async function addQuizResult (userId, quizId, score, result) {
         quizId: quizId,
         result: result,
         score: score,
-        date:   serverTimestamp()  // Firestore server timestamp
+        date:   Date.now()  // Firestore server timestamp
       };
   
       // Add quiz result to the quizzes array in the user document

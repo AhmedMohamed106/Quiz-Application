@@ -15,117 +15,131 @@
    // Initialize Firebase
    const app = initializeApp(firebaseConfig);
  
-   const auth=getAuth();
-   const db=getFirestore();
 
-   
-   async function fetchUserQuizzes(userId) {
+   const auth = getAuth();
+const db = getFirestore();
+
+document.addEventListener('DOMContentLoaded', () => {
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            const userId = user.uid;
+            localStorage.setItem("loggedInUserId", userId);
+
+            fetchUserQuizzes(userId);
+        } else {
+            console.error("No user is signed in.");
+            localStorage.removeItem("loggedInUserId");
+        }
+    });
+
+    const logoutButton = document.getElementById('logout');
+    if (logoutButton) {
+        logoutButton.addEventListener('click', () => {
+            signOut(auth)
+                .then(() => {
+                    localStorage.removeItem('loggedInUserId');
+                    window.location.href = '../components/homepage.html';
+                })
+                .catch((error) => {
+                    console.error('Error signing out:', error);
+                });
+        });
+    } else {
+        console.error('Logout button not found');
+    }
+});
+
+function fetchUserQuizzes(userId) {
     const userRef = doc(db, 'users', userId);
 
-    try {
-        const userDoc = await getDoc(userRef);
+    getDoc(userRef)
+        .then((userDoc) => {
+            if (!userDoc.exists()) {
+                throw new Error('User document not found');
+            }
 
-        if (userDoc.exists()) {
             const userData = userDoc.data();
             const quizzes = userData.quizzes || [];
-            document.getElementById("Name").innerHTML =`Welcome, ${userData.username}`;
 
-            const tableBody = document.querySelector('#quiz-table tbody');
-            tableBody.innerHTML = '';
+            // Ensure the DOM is fully loaded before accessing elements
+            document.addEventListener('DOMContentLoaded', () => {
+                const nameElement = document.getElementById("user-Name");
 
-            for (let i = 0; i < quizzes.length; i++) {
-                const quiz = quizzes[i];
-                const quizRef = doc(db, 'quizzes', quiz.quizId);
-                const quizDoc = await getDoc(quizRef);
-
-                let category = 'Unknown';
-                let questionsNumber = 'Unknown';
-
-                if (quizDoc.exists()) {
-                    const quizData = quizDoc.data();
-                    category = quizData.category || 'Unknown';
-                    questionsNumber = quizData.questions ? quizData.questions.length : 'Unknown';
-                }
-
-                const row = document.createElement('tr');
-
-                const quizNumberCell = document.createElement('td');
-                quizNumberCell.textContent = i + 1;
-                row.appendChild(quizNumberCell);
-
-                const categoryCell = document.createElement('td');
-                categoryCell.textContent = category;
-                row.appendChild(categoryCell);
-
-                const questionsNumberCell = document.createElement('td');
-                questionsNumberCell.textContent = questionsNumber;
-                row.appendChild(questionsNumberCell);
-
-                const scoreCell = document.createElement('td');
-                scoreCell.textContent = quiz.score;
-                row.appendChild(scoreCell);
-
-                const resultCell = document.createElement('td');
-                resultCell.textContent = JSON.stringify(quiz.result); // Displaying result as JSON string
-                row.appendChild(resultCell);
-
-                const dateCell = document.createElement('td');
-                let quizDate;
-                if (quiz.date && quiz.date.toDate) {
-                    quizDate = quiz.date.toDate();
-                } else if (quiz.date && !isNaN(quiz.date.seconds)) {
-                    quizDate = new Date(quiz.date.seconds * 1000);
+                if (nameElement) {
+                    if (userData.username) {
+                        nameElement.textContent = `Welcome, ${userData.username}`;
+                    } else {
+                        console.error('User data does not contain a username');
+                    }
                 } else {
-                    quizDate = new Date(quiz.date);
+                    console.error('Element with ID "user-Name" not found');
                 }
-                dateCell.textContent = quizDate.toLocaleString(); // Format date to a readable string
-                row.appendChild(dateCell);
 
-                tableBody.appendChild(row);
-            }
-        } else {
-            console.error('User document not found');
-        }
-    } catch (error) {
-        console.error('Error fetching user quizzes:', error);
-    }
+                const tableBody = document.querySelector('#quiz-table tbody');
+                if (tableBody) {
+                    tableBody.innerHTML = '';
+
+                    let quizPromises = quizzes.map((quiz, index) => {
+                        const quizRef = doc(db, 'quizzes', quiz.quizId);
+                        return getDoc(quizRef)
+                            .then((quizDoc) => {
+                                let category = 'Unknown';
+                                let questionsNumber = 'Unknown';
+
+                                if (quizDoc.exists()) {
+                                    const quizData = quizDoc.data();
+                                    category = quizData.category || 'Unknown';
+                                    questionsNumber = quizData.questions ? quizData.questions.length : 'Unknown';
+                                }
+
+                                const row = document.createElement('tr');
+
+                                const quizNumberCell = document.createElement('td');
+                                quizNumberCell.textContent = index + 1;
+                                row.appendChild(quizNumberCell);
+
+                                const categoryCell = document.createElement('td');
+                                categoryCell.textContent = category;
+                                row.appendChild(categoryCell);
+
+                                const questionsNumberCell = document.createElement('td');
+                                questionsNumberCell.textContent = questionsNumber;
+                                row.appendChild(questionsNumberCell);
+
+                                const scoreCell = document.createElement('td');
+                                scoreCell.textContent = quiz.score;
+                                row.appendChild(scoreCell);
+
+                                const resultCell = document.createElement('td');
+                                resultCell.textContent = JSON.stringify(quiz.result);
+                                row.appendChild(resultCell);
+
+                                const dateCell = document.createElement('td');
+                                let quizDate;
+                                if (quiz.date && quiz.date.toDate) {
+                                    quizDate = quiz.date.toDate();
+                                } else if (quiz.date && !isNaN(quiz.date.seconds)) {
+                                    quizDate = new Date(quiz.date.seconds * 1000);
+                                } else {
+                                    quizDate = new Date(quiz.date);
+                                }
+                                dateCell.textContent = quizDate.toLocaleString();
+                                row.appendChild(dateCell);
+
+                                tableBody.appendChild(row);
+                            })
+                            .catch((error) => {
+                                console.error(`Error fetching quiz ${quiz.quizId}:`, error);
+                            });
+                    });
+
+                    return Promise.all(quizPromises);
+                } else {
+                    throw new Error('Quiz table body not found');
+                }
+            });
+        })
+        .catch((error) => {
+            console.error('Error fetching user quizzes:', error);
+        });
 }
-fetchUserQuizzes(localStorage.getItem("LoggedInUserId"));
-
-   onAuthStateChanged(auth, (user)=>{
-     const loggedInUserId=localStorage.getItem('loggedInUserId');
-     if(loggedInUserId){
-         console.log(user);
-         const docRef = doc(db, "users", loggedInUserId);
-         getDoc(docRef)
-         .then((docSnap)=>{
-             if(docSnap.exists()){
-
-             }
-             else{
-                 console.log("no document found matching id")
-             }
-         })
-         .catch((error)=>{
-             console.log("Error getting document");
-         })
-     }
-     else{
-         console.log("User Id not Found in Local storage")
-     }
-   })
- 
-   const logoutButton=document.getElementById('logout');
- 
-   logoutButton.addEventListener('click',()=>{
-     signOut(auth)
-     .then(()=>{
-        localStorage.removeItem('loggedInUserId');
-         window.location.href='../components/homepage.html';
-     })
-     .catch((error)=>{
-         console.error('Error Signing out:', error);
-     })
-   })
-
-   

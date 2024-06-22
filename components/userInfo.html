@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles/profile.css">
+    <link rel="stylesheet" href="../styles/userInfo.css">
 </head>
 <body>
     <header class="bg-primary text-white text-center py-3">
@@ -27,12 +27,8 @@
         </section>
         <section class="update-info card">
             <div class="card-body">
-                <h2 class="card-title">Update Information</h2>
+                <h2 class="card-title">Update Password</h2>
                 <form id="update-form">
-                    <div class="form-group">
-                        <label for="new-username">New Username:</label>
-                        <input type="text" id="new-username" class="form-control" placeholder="Enter new username">
-                    </div>
                     <div class="form-group">
                         <label for="current-password">Current Password:</label>
                         <input type="password" id="current-password" class="form-control" placeholder="Enter current password">
@@ -52,9 +48,9 @@
     <footer class="bg-primary text-white text-center py-3">
         <p>&copy; 2024 User Management System. All rights reserved.</p>
     </footer>
+    <script type="module" src="../Src/userInfo.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="scripts/profile.js"></script>
 </body>
 </html>
