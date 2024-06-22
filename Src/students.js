@@ -4,7 +4,7 @@ import {
     getDocs,
     query,
     where,
-    getDoc,
+    getDoc ,doc
 } from "../Src/FirebaseConfig.js";
 
 document.addEventListener('DOMContentLoaded', async function () {
@@ -13,8 +13,8 @@ document.addEventListener('DOMContentLoaded', async function () {
     const studentsQuery = query(studentsRef, where('role', '==', 'student'));
     const studentSnapshot = await getDocs(studentsQuery);
 
-    studentSnapshot.forEach(doc => {
-        const studentData = doc.data();
+    studentSnapshot.forEach(docs => {
+        const studentData = docs.data();
         const username = studentData.username;
         const email = studentData.email;
         const quizzes = studentData.quizzes ? studentData.quizzes : [];
