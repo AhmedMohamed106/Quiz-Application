@@ -2,7 +2,8 @@
  import { initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
  // TODO: Add SDKs for Firebase products that you want to use
  // https://firebase.google.com/docs/web/setup#available-libraries
- import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from  "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"
+ import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword , reauthenticateWithCredential,
+  EmailAuthProvider,updatePassword} from  "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"
  import { getFirestore, collection, getDocs, setDoc, doc,getDoc , arrayUnion,updateDoc, query , where} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
  const firebaseConfig = {
    apiKey: "AIzaSyAzUtcwZ9iUoti3r_odFACoT2L69ilG_Qs",
@@ -31,7 +32,9 @@ export {
   collection,
   getDocs,
   setDoc,
-  doc,getDoc,query, where , updateDoc,arrayUnion
+  doc,getDoc,query, where , updateDoc,arrayUnion ,reauthenticateWithCredential,
+  EmailAuthProvider,
+  updatePassword
 };
 
 

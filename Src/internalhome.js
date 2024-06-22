@@ -28,6 +28,7 @@
         if (userDoc.exists()) {
             const userData = userDoc.data();
             const quizzes = userData.quizzes || [];
+            document.getElementById("Name").innerHTML =`Welcome, ${userData.username}`;
 
             const tableBody = document.querySelector('#quiz-table tbody');
             tableBody.innerHTML = '';
@@ -99,7 +100,7 @@ fetchUserQuizzes(localStorage.getItem("LoggedInUserId"));
          getDoc(docRef)
          .then((docSnap)=>{
              if(docSnap.exists()){
-                
+
              }
              else{
                  console.log("no document found matching id")
