@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             console.log("No user is signed in.");
             // Example: Redirect to login page or show a message to the user
             // Replace this with your application's logic
-            alert("Please sign in to access your profile information.");
+            window.location.href = "../components/LoginUser.html";
         }
     });
 
@@ -39,7 +39,6 @@ document.addEventListener('DOMContentLoaded', async function () {
     updateForm.addEventListener('submit', async function (e) {
         e.preventDefault();
 
-        const newUsername = document.getElementById('new-username').value;
         const currentPassword = document.getElementById('current-password').value;
         const newPassword = document.getElementById('new-password').value;
 

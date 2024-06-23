@@ -11,7 +11,7 @@ import { getFirestore, collection, addDoc, doc, setDoc } from "https://www.gstat
    appId: "1:488376516249:web:7b073ca83ee31c46b1c208"
  };
 
-const app = initializeApp(firebaseConfig);
+initializeApp(firebaseConfig);
 
 const firestore = getFirestore();
 
