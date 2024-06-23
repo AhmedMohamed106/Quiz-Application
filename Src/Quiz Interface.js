@@ -33,6 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const incorrectAnswersElement = document.getElementById("incorrect-answers");
     const totalScoreElement = document.getElementById("total-score");
     const totalDegreeElement = document.getElementById("total-degree");
+    const progressBar = document.getElementById('progress-bar');
 
     getDoc(quizDocRef)
         .then((quizDoc) => {
@@ -51,6 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     });
                     loadQuestion(currentQuestionIndex);
                     startTimer();
+                    updateProgressBar();
                 } else {
                     alert('No questions found in the quiz!');
                 }
@@ -102,6 +104,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 optionsContainer.appendChild(optionBtn);
             });
         }
+
+        updateProgressBar();
     }
 
     function selectOption(index) {
@@ -148,6 +152,11 @@ document.addEventListener("DOMContentLoaded", function () {
         nextBtn.disabled = currentQuestionIndex === questions.length - 1;
     }
 
+    function updateProgressBar() {
+        const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+        progressBar.style.width = progress + '%';
+    }
+
     async function addQuizResult(userId, quizId, score, result) {
         try {
             const quizResult = {
@@ -173,6 +182,7 @@ document.addEventListener("DOMContentLoaded", function () {
             currentQuestionIndex--;
             loadQuestion(currentQuestionIndex);
             updateNavigationButtons();
+            updateProgressBar();
         }
     });
 
@@ -181,6 +191,7 @@ document.addEventListener("DOMContentLoaded", function () {
             currentQuestionIndex++;
             loadQuestion(currentQuestionIndex);
             updateNavigationButtons();
+            updateProgressBar();
         }
     });
 
