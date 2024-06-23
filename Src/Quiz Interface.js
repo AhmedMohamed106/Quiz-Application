@@ -1,11 +1,4 @@
-
-
-import {
-    firestore,
-    getDoc,
-    doc,
-    updateDoc,arrayUnion,serverTimestamp
-} from "../Src/FirebaseConfig.js";
+import { firestore, getDoc, doc, updateDoc, arrayUnion } from "../Src/FirebaseConfig.js";
 
 document.addEventListener("DOMContentLoaded", function () {
     const urlParams = new URLSearchParams(window.location.search);
@@ -26,8 +19,8 @@ document.addEventListener("DOMContentLoaded", function () {
     let timerInterval;
     let correctMarks = 0;
     let minusMarks = 0;
-    let TotalMarks = 0;
-    let QuestionLength = 0;
+    let totalMarks = 0;
+    let questionLength = 0;
 
     const questionText = document.getElementById("question-text");
     const optionsContainer = document.querySelector(".options-container");
@@ -40,16 +33,17 @@ document.addEventListener("DOMContentLoaded", function () {
     const incorrectAnswersElement = document.getElementById("incorrect-answers");
     const totalScoreElement = document.getElementById("total-score");
     const totalDegreeElement = document.getElementById("total-degree");
+    const progressBar = document.getElementById('progress-bar');
 
     getDoc(quizDocRef)
         .then((quizDoc) => {
             if (quizDoc.exists()) {
                 const quizData = quizDoc.data();
                 questions = quizData.questions;
-                QuestionLength = questions.length;
+                questionLength = questions.length;
                 correctMarks = parseInt(quizData.marks);
                 minusMarks = parseInt(quizData.minusMarks);
-                totalQuizTime = quizData.timeLimit; // Total quiz duration in seconds
+                totalQuizTime = quizData.timeLimit;
 
                 if (Array.isArray(questions) && questions.length > 0) {
                     questions.forEach(() => {
@@ -57,7 +51,8 @@ document.addEventListener("DOMContentLoaded", function () {
                         isCorrect.push(null);
                     });
                     loadQuestion(currentQuestionIndex);
-                    startTimer(); // Start the quiz timer
+                    startTimer();
+                    updateProgressBar();
                 } else {
                     alert('No questions found in the quiz!');
                 }
@@ -97,23 +92,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (question.options && typeof question.options === 'object') {
             Object.entries(question.options).forEach(([key, option], optionIndex) => {
-            const optionBtn = document.createElement("button");
-            optionBtn.className = "option";
-            optionBtn.textContent = option;
-            optionBtn.addEventListener("click", function () {
-                selectOption(optionIndex);
+                const optionBtn = document.createElement("button");
+                optionBtn.className = "option";
+                optionBtn.textContent = option;
+                optionBtn.addEventListener("click", function () {
+                    selectOption(optionIndex);
+                });
+                if (selectedAnswers[index] === optionIndex) {
+                    optionBtn.classList.add("selected");
+                }
+                optionsContainer.appendChild(optionBtn);
             });
-            if (selectedAnswers[index] === optionIndex) {
-                optionBtn.classList.add("selected");
-            }
-            optionsContainer.appendChild(optionBtn);
-        });
+        }
+
+        updateProgressBar();
     }
-}
 
     function selectOption(index) {
         selectedAnswers[currentQuestionIndex] = index;
-        isCorrect[currentQuestionIndex] = index === questions[currentQuestionIndex].correctAnswer;
+        const correctAnswerIndex = Object.keys(questions[currentQuestionIndex].options).indexOf(questions[currentQuestionIndex].correctAnswer);
+        isCorrect[currentQuestionIndex] = index === correctAnswerIndex;
         const optionButtons = optionsContainer.querySelectorAll(".option");
         optionButtons.forEach((btn, btnIndex) => {
             btn.classList.remove("selected");
@@ -123,10 +121,10 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    let correctCount = 0;
-    let incorrectCount = 0;
-
     function calculateScore() {
+        let correctCount = 0;
+        let incorrectCount = 0;
+
         isCorrect.forEach(correct => {
             if (correct) {
                 correctCount++;
@@ -135,13 +133,13 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
-        TotalMarks = (correctCount * correctMarks )  - (incorrectCount * minusMarks);
-        let overallMarks  = (correctMarks * QuestionLength ); 
+        totalMarks = (correctCount * correctMarks) - (incorrectCount * minusMarks);
+        let overallMarks = (correctMarks * questionLength);
 
         correctAnswersElement.textContent = `Correct Answers: ${correctCount}`;
         incorrectAnswersElement.textContent = `Incorrect Answers: ${incorrectCount}`;
         totalScoreElement.textContent = `Total Score: ${correctCount} out of ${questions.length}`;
-        totalDegreeElement.textContent = `Total Degree is ${TotalMarks} of ${overallMarks}`;
+        totalDegreeElement.textContent = `Total Degree: ${totalMarks} out of ${overallMarks}`;
 
         document.querySelector('.quiz-container').style.display = 'none';
         timerElement.style.display = 'none';
@@ -154,35 +152,37 @@ document.addEventListener("DOMContentLoaded", function () {
         nextBtn.disabled = currentQuestionIndex === questions.length - 1;
     }
 
-
-    /* save quiz results*/
-
-async function addQuizResult (userId, quizId, score, result) {
-    try {
-      const quizResult = {
-        quizId: quizId,
-        result: result,
-        score: score,
-        date:   Date.now()  // Firestore server timestamp
-      };
-  
-      // Add quiz result to the quizzes array in the user document
-      await updateDoc(doc(firestore, 'users', userId), {
-        quizzes: arrayUnion(quizResult)
-      });
-  
-      console.log('Quiz result added for user:', userId);
-    } catch (error) {
-      console.error('Error adding quiz result:', error);
-      throw error;
+    function updateProgressBar() {
+        const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+        progressBar.style.width = progress + '%';
     }
-  };
+
+    async function addQuizResult(userId, quizId, score, result) {
+        try {
+            const quizResult = {
+                quizId: quizId,
+                result: result,
+                score: score,
+                date: serverTimestamp()
+            };
+
+            await updateDoc(doc(firestore, 'users', userId), {
+                quizzes: arrayUnion(quizResult)
+            });
+
+            console.log('Quiz result added for user:', userId);
+        } catch (error) {
+            console.error('Error adding quiz result:', error);
+            throw error;
+        }
+    }
 
     prevBtn.addEventListener("click", function () {
         if (currentQuestionIndex > 0) {
             currentQuestionIndex--;
             loadQuestion(currentQuestionIndex);
             updateNavigationButtons();
+            updateProgressBar();
         }
     });
 
@@ -191,14 +191,13 @@ async function addQuizResult (userId, quizId, score, result) {
             currentQuestionIndex++;
             loadQuestion(currentQuestionIndex);
             updateNavigationButtons();
+            updateProgressBar();
         }
     });
 
     submitBtn.addEventListener("click", function () {
         clearInterval(timerInterval);
         calculateScore();
-        addQuizResult(localStorage.getItem("LoggedInUserId") , quizId , correctCount , TotalMarks);
-
+        addQuizResult(localStorage.getItem("LoggedInUserId"), quizId, correctCount, totalMarks);
     });
 });
-
