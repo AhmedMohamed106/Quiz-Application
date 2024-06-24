@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     updateForm.addEventListener('submit', async function (e) {
         e.preventDefault();
 
-        const newUsername = document.getElementById('new-username').value;
+       // const newUsername = document.getElementById('new-username').value;
         const currentPassword = document.getElementById('current-password').value;
         const newPassword = document.getElementById('new-password').value;
 

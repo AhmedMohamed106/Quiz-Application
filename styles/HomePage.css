@@ -88,20 +88,15 @@
   
   .main-title {
     text-align: center;
-    margin-bottom: 25px;
+    margin-bottom: 50px;
+    font-size: 24px;
   }
-  .main-title h2 {
-    color: #7f7f9b;
-    font-size: 14px;
-    font-weight: 400;
-    text-transform: uppercase;
-  }
+
   .main-title p {
-    font-family: var(--font-primary);
     font-size: 50px;
   }
   .main-title p span {
-    color: #e61414;
+    color:#770550;
   }
   /* Dark Mode */
   .dark-mode {
@@ -115,7 +110,7 @@
     color: #9e9e9e;
   }
   .dark-mode nav .nav-links li a:hover{
-    color: #fff;
+    color: #f592dc;
   }
   .dark-mode nav {
     background-color: #171717;
@@ -123,7 +118,7 @@
   }
   .dark-mode:has(#home:target) li a[href="#home"],
   .dark-mode nav .logo a {
-    color: #fff;
+    color: #f592dc;
   }
   .dark-mode header,
   .dark-mode header .header-content h2,
@@ -239,71 +234,81 @@
     align-items: center;
   }
   header .header-content {
-    width: 40%;
+    position: absolute;
+    width: 55%;
+    left: 20%;
+    top: -250%;
+    font-weight: 900;
+    
   }
   header .header-content h2 {
-    font-family: var(--font-primary);
-    font-size: 65px;
-    color: #800347;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif ;
+    font-size: 55px;
+    color: #fff;
+    
+   
   }
   header .header-content h1 {
     margin: 20px 0;
     line-height: 1.6;
-    font-size: 24px;
-    color: #800347;
+    font-size: 35px;
+    color: #770550;
+   
   }
-  header .header-content .btn-group {
-    display: flex;
-    align-items: center;
-    gap: 30px;
+ 
+  /* Define the keyframes for the animation */
+/* Define keyframes for split animation */
+@keyframes splitIn {
+  0% {
+      opacity: 0;
+      transform: translateY(-100%);
   }
-  header .header-content .btn-group .btn-book {
-    font-size: 15px;
-    background-color: #880d59;
-    color: #fff;
-    padding: 15px 20px;
-    border-radius: 0 30px 30px;
-    transition: var(--animation-duration);
+  50% {
+      opacity: 0.5;
+      transform: translateY(50%);
   }
-  header .header-content .btn-group .btn-book:hover {
-    transform: scale(1.1);
+  100% {
+      opacity: 1;
+      transform: translateY(0);
   }
-  header .header-content .btn-group .btn-video {
-    color: #212529;
-    font-weight: 600;
-    transition: var(--animation-duration);
-    display: flex;
-    align-items: center;
+}
+
+@keyframes splitInReverse {
+  0% {
+      opacity: 0;
+      transform: translateY(100%);
   }
-  header .header-content .btn-group .btn-video:hover {
-    color: #880d59;
+  50% {
+      opacity: 0.5;
+      transform: translateY(-50%);
   }
-  header .header-content .btn-group .btn-video .icon {
-    width: 45px;
-    height: 45px;
-    background-color: #fff;
-    border: 5px solid;
-    border-color: transparent transparent #880d59 #880d59;
-    border-radius: 50%;
-    margin-right: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transform: rotate(45deg);
+  100% {
+      opacity: 1;
+      transform: translateY(0);
   }
-  header .header-content .btn-group .btn-video::after {
-    content: "Watch a Video";
-  }
-  header .header-content .btn-group .btn-video .icon i {
-    transform: rotate(75deg);
-  }
-  header .header-image {
-    width: 40%;
-  }
-  header .header-image img {
-    width: 100%;
-    filter: drop-shadow(4px 4px 9px #000a);
-  }
+}
+
+/* Apply the animation to the div */
+
+
+.header-content h1, .header-content h2 {
+  display: inline-block;
+  opacity: 0;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+.header-content h1 {
+  animation-name: splitIn;
+  animation-delay: 0.2s;
+}
+
+.header-content h2 {
+  animation-name: splitInReverse;
+  animation-delay: 0.4s;
+}
+
+
   @media screen and (min-width: 1200px) {
     header .header-image {
       width: 35%;
@@ -334,12 +339,19 @@
   /* Start category */
   .category {
     padding: var(--main-padding);
+    background-color: rgb(255, 230, 249);
+
+  }
+  .category img{
+    height: 50vh;
   }
   .category .category-cards {
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 30px;
+    
+    
   }
   .category .category-cards .card {
     border-radius: 7px;
@@ -348,11 +360,15 @@
     position: relative;
     overflow: hidden;
     transition: var(--animation-duration);
+    background-color: #770550;
   }
   .category .category-cards .card:hover {
     transform: scale(1.07);
+    color: #fff;
   }
+  
   .category .category-cards .card:hover .social-box {
+    
     right: 10px;
   }
   .category .category-cards .card img {
@@ -364,7 +380,7 @@
   .category .category-cards .card .image::after {
     content: "";
     width: 100%;
-    height: 60px;
+    height: 50px;
     background: url(../images/team-shape.svg) repeat-x;
     background-size: cover;
     position: absolute;
@@ -377,16 +393,16 @@
   .category .category-cards .card .card-content h3 {
     font-family: var(--font-secondary);
   }
-  .category .category-cards .card .card-content span {
-    color: #7f7f9b;
-    font-size: 14px;
-    margin: 10px 15px;
-    display: block;
-  }
-  .category .category-cards .card .card-content p {
-    color: #7f7f9b;
+  
+  .category .category-cards .card .card-content p{
+    color: #fff;
     font-size: 15px;
-    font-style: italic;
+   
+  }
+  .category .category-cards .card .card-content p:hover {
+    color: rgb(224, 77, 190);
+    font-size: 15px;
+   
   }
   .category .category-cards .card .social-box {
     background-color: #ffffff4d;
@@ -401,7 +417,7 @@
   .category .category-cards .card .social-box li i {
     font-size: 18px;
     padding: 10px 5px;
-    color: #37373f66;
+    color: #770550;
     transition: var(--animation-duration);
   }
   .category .category-cards .card .social-box li i:hover {
@@ -478,6 +494,7 @@
   /* Start Contact */
   .contact {
     padding: var(--main-padding);
+    background-color: rgb(255, 230, 249);;
   }
   .contact iframe {
     width: 100%;
@@ -501,7 +518,7 @@
   .contact .details .info .icon {
     min-width: 50px;
     min-height: 50px;
-    background-color: #ce12ce;
+    background-color: #770550;
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -542,7 +559,7 @@
   .contact form input:focus,
   .contact form textarea:focus {
     outline: none;
-    border-color: #ce1212;
+    border-color: #770550
   }
   .contact form .input-group {
     display: flex;
@@ -557,7 +574,7 @@
     padding: 12px 40px;
     font-size: 15px;
     width: fit-content;
-    background-color: #ce1212;
+    background-color:#770550;
     color: #fff;
     border: none;
     border-radius: 30px;
@@ -566,7 +583,7 @@
     transition: var(--animation-duration);
   }
   .contact form .send-message:hover {
-    background-color: #e61414;
+    background-color: #770550;
   }
   
   @media screen and (max-width: 1202px) {
@@ -589,8 +606,7 @@
   /* Start Footer */
   footer {
     padding: 40px 0;
-    background-image: linear-gradient(#0009, #0009),
-      url(../images/textured-metal-background.jpg);
+    background-color: #000;
     color: #fff;
     background-size: contain;
   }
@@ -617,7 +633,7 @@
   }
   footer .about .logo h2::after {
     content: ".";
-    color: #ce1212;
+    color: #770550;
   }
   footer .about p {
     margin: 10px 0;
@@ -655,7 +671,7 @@
     flex-grow: 1;
   }
   footer .subscription .subscription-info .subscription-form .btn-subscription {
-    background-color: #880d59;
+    background-color: #770550;
     color: #fff;
     border: none;
     padding: 10px;
@@ -700,7 +716,7 @@
     width: 20px;
     height: 20px;
     font-size: 20px;
-    color: #ce1212;
+    color:#770550;
     margin-right: 8px;
   }
   footer .contact-details ul li a {

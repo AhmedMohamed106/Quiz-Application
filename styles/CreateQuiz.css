@@ -41,7 +41,7 @@ body{
 .form-group input{
     border: none;
     outline: none;
-    border-bottom: 1px solid rgb(126, 2, 115);
+    border-bottom: 1px solid #770550;
     margin: 10px 0;
     background: none;
     font-size: 15px;
@@ -54,7 +54,7 @@ body{
 }
 .head h2{
     color: rgb(252, 252, 252);
-    background-color: rgb(122, 0, 126);
+    background-color: #770550;
     position: absolute;
     width: 100%;
     padding: 10px 0;
@@ -68,7 +68,7 @@ body{
     
 }
 #quizForm .btn,#questionForms .btn {
-    background-color: rgb(143, 2, 148);
+    background-color: #770550;
     color: #fff;
 }
 .form-group input::placeholder {

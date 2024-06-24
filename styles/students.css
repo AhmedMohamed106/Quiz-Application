@@ -1,14 +1,31 @@
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f8f9fa;
+    background-color: rgb(255, 230, 249);
 }
 
 .card {
     margin-top: 20px;
 }
-
+.container h2{
+    font-weight: 800;
+    color: #770550;
+}
 .table-responsive {
     overflow-x: auto;
+}
+.navbar{
+    background-color: #770550;  
+}
+
+.card-title{
+    text-align: center;
+    color: #770550;
+    font-family:Arial, Helvetica, sans-serif;
+}
+.fa-solid{
+    font-size: 24px;
+    color:#fcf7fa;
+    padding: 0 4px;
 }
 
 .table {
@@ -22,12 +39,12 @@ body {
 }
 
 .table thead th {
-    background-color: #343a40;
+    background-color: #770550;
     color: #fff;
 }
 
 .table tbody tr:nth-child(odd) {
-    background-color: #f2f2f2;
+    background-color: #e19ae4;
 }
 
 .table-bordered th,
@@ -36,9 +53,23 @@ body {
 }
 
 .table-striped tbody tr:nth-child(odd) {
-    background-color: #e9ecef;
+    background-color: #e19ae4;
+}
+.navbar-brand{
+    font-size: 28px;
+    font-weight: 800;
+}
+.navbar-brand::after{
+    content: ".";
+    color: #f592dc;
 }
 
 .table-striped tbody tr:hover {
-    background-color: #d1d7dc;
+    background-color: #f5c9f7;
+}
+a:link,
+a:visited,
+a:hover {
+    text-decoration: none;
+    color:#fff; /* Make sure the color does not change on hover */
 }

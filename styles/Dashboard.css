@@ -18,7 +18,7 @@ body{
     position: fixed;
     width: 300px;
     height: 100%;
-    background-color: rgb(68, 5, 54);
+    background-color: #770550;
     transition: 0.5s;
     overflow: hidden;
 }
@@ -81,7 +81,7 @@ width: 60px;
     width: calc(100% - 300px);
     left: 300px;
     min-height: 100vh;
-    background: rgb(247, 239, 247);
+    background: rgb(255, 230, 249);
     transition: 0.5s;
 
 }
@@ -96,7 +96,7 @@ width: 60px;
     padding: 0 10px;
     align-items: center;
     justify-content: space-between;
-    background-color:rgb(248, 219, 248) ;
+    background-color:rgb(238, 136, 199) ;
     
 }
 
@@ -159,7 +159,7 @@ border:1px solid rgba(0, 0, 0, .2);
     width: 100%;
     padding: 20px;
     display: grid;
-    grid-template-columns:repeat(4,1fr);
+    grid-template-columns:repeat(3,1fr);
     gap: 20px;
 }
 .cardBox .card{

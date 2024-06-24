@@ -130,7 +130,7 @@ nav .nav-links li a.active::before {
 }
 .content .left-side .details i {
   font-size: 30px;
-  color: #70045e;
+  color: #770550;
   margin-bottom: 10px;
 }
 .content .left-side .details .topic {
@@ -150,7 +150,7 @@ nav .nav-links li a.active::before {
 .content .right-side .topic-text {
   font-size: 23px;
   font-weight: 600;
-  color: #6b0143;
+  color: #770550;
 }
 .right-side .input-box {
   height: 55px;
@@ -186,12 +186,12 @@ nav .nav-links li a.active::before {
   border: none;
   padding: 8px 16px;
   border-radius: 6px;
-  background: #70045e;
+  background: #770550;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 .button input[type="button"]:hover {
-  background: #70045e;
+  background: #770550;
 }
 
 @media (max-width: 950px) {

@@ -5,15 +5,21 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #f4f4f4;
+    height: 100vh;
+    background-color:rgb(255, 230, 249);
 }
 
 header {
-    background-color: #d80ee2;
+    background-color: #770550;
     color: white;
-    padding: 1rem;
+    padding: 5px;
     width: 100%;
     text-align: center;
+}
+header h1 {
+    padding: 0 30px;
+    text-align: left;
+    font-size: 28px;
 }
 
 main {
@@ -142,12 +148,21 @@ main {
     font-size: 18px;
     margin: 5px 0;
 }
-
+#home.btn{
+    background-color: #770550;
+    color: #fff;
+    margin-bottom: 15px;
+}
+a{
+    text-decoration: none;
+}
 footer {
-    background-color: #333;
+    background-color: #770550;
     color: white;
-    padding: 1rem;
+    padding: 5px;
     width: 100%;
+    font-weight: 600;
+    position: absolute;
     text-align: center;
     bottom: 0;
 }

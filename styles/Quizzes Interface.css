@@ -1,3 +1,8 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
 body {
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
@@ -5,22 +10,35 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: rgb(235, 235, 235);
+    background-color: rgb(255, 230, 249);
+  
 }
 
-header {
-    background-color: #d80ee2;
+
+header{
+    background-color:#770550;
     color: white;
-    padding: 1rem;
     width: 100%;
     text-align: center;
+    font-size: 17;
+    font-weight: 700;
+    font-family: Arial, Helvetica, sans-serif;
 }
+nav .logo {
+    font-size: 24px;
+}
+nav .logo::after {
+    content: ".";
+    color: #f592dc;
+   
+  }
 
 .search-filter-container {
     display: flex;
     justify-content: center;
     margin: 1rem;
-    width: 100%;
+    width: 50%;
+   
 }
 
 .search-filter-container input,
@@ -28,7 +46,7 @@ header {
     margin: 0 0.5rem;
     padding: 0.5rem;
     font-size: 1rem;
-    border-radius: 0.5rem;
+    border-radius: 45px;
 }
 
 main {
@@ -36,6 +54,7 @@ main {
     flex-wrap: wrap;
     justify-content: center;
     margin: 2rem 0;
+    
 }
 
 .quiz-card {
@@ -58,8 +77,8 @@ main {
 }
 
 .quiz-card-btn {
-    background-color: #9c2ea2;
-    color: white;
+    background-color: #770550;
+    color: #fff;
     border: none;
     padding: 0.5rem 1rem;
     border-radius: 5px;
@@ -68,7 +87,7 @@ main {
 }
 
 .quiz-card-btn:hover {
-    background-color: #812686;
+    background-color:#770550;
 }
 
 .card {
@@ -82,15 +101,19 @@ main {
 
 .card-category {
     font-size: 1rem;
-    color: #007bff;
+    color: #770550;
+    font-family:cursive;
+    font-size: 18;
 }
 
 .card-description {
     margin-top: 10px;
+    font-family: cursive;
+    
 }
 
 footer {
-    background-color: #5e5e5e;
+    background-color: #770550;
     color: white;
     width: 100%;
     text-align: center;
@@ -102,7 +125,7 @@ a:link,
 a:visited,
 a:hover {
     text-decoration: none;
-    color: inherit; /* Make sure the color does not change on hover */
+    color:#fff; /* Make sure the color does not change on hover */
 }
 
 @media (max-width: 1200px) {
