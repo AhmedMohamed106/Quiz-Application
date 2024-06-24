@@ -4,7 +4,7 @@
     box-sizing: border-box;
 }
 body{
-    background-image: url("../assets/Images/crudQuiz.jpg");
+    background-image: url("../assets/Images/slider5.jpg");
     background-size: cover;
 }
 .container{
@@ -18,7 +18,7 @@ body{
     margin: auto;
     background: #fff;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-    opacity: .7;
+    opacity: 0.9;
     padding: 10px;
     
 }
