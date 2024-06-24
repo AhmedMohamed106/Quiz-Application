@@ -1,7 +1,7 @@
  // Import the functions you need from the SDKs you need
  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
  import {getAuth, onAuthStateChanged, signOut} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
- import{getFirestore, getDoc, doc} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"
+ import{getFirestore, collection, where , getDocs , query , doc , getDoc} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"
  
  const firebaseConfig = {
     apiKey: "AIzaSyAzUtcwZ9iUoti3r_odFACoT2L69ilG_Qs",
@@ -18,209 +18,116 @@
 
 const auth = getAuth();
 const db = getFirestore();
-/*
-document.addEventListener('DOMContentLoaded', () => {
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
+
+
+
+      async function fetchUserQuizzes(userId) {
+        try {
+          console.log(`Fetching quizzes for user: ${userId}`);
+          const userRef = doc(db, 'users', userId);
+          const userDoc = await getDoc(userRef);
+          
+          if (!userDoc.exists()) {
+            throw new Error('User document not found');
+          }
+          
+          const userData = userDoc.data();
+          if(userData.role === 'student'){
+          console.log('User data:', userData);
+
+          const quizzes = userData.quizzes || [];
+          
+          const nameElement = document.getElementById("user-Name");
+          if (nameElement && userData.username) {
+            nameElement.textContent = `Welcome, ${userData.username}`;
+            nameElement.style.display = "block"; // Ensure it's visible
+          } else {
+            //console.error('User data does not contain a username or element with ID "user-Name" not found');
+          }
+          
+          const tableBody = document.querySelector('#quiz-table tbody');
+          if (!tableBody) {
+           // throw new Error('Quiz table body not found');
+          }
+          
+          tableBody.innerHTML = ''; // Clear existing rows
+          
+          const quizPromises = quizzes.map(async (quiz, index) => {
+            const quizId = quiz.quizId;
+            console.log(`Fetching quiz: ${quizId}`);
+            const quizRef = doc(db, 'quizzes', quizId);
+            const quizDoc = await getDoc(quizRef);
+            
+            if (!quizDoc.exists()) {
+              console.warn(`Quiz document ${quizId} not found`);
+              return; // Skip to the next quiz
+            }
+            
+            const quizData = quizDoc.data();
+            console.log(`Quiz data for ${quizId}:`, quizData);
+            const category = quizData.category || 'Unknown';
+            const questionsNumber = quizData.questions ? quizData.questions.length : 'Unknown';
+            const formattedDate = quiz.date ? new Date(quiz.date.seconds * 1000).toLocaleString() : 'Unknown';
+            
+            const row = document.createElement('tr');
+            row.innerHTML = `
+              <td>${index + 1}</td>
+              <td>${category}</td>
+              <td>${questionsNumber}</td>
+              <td>${quiz.score}</td>
+              <td>${JSON.stringify(quiz.result)}</td>
+              <td>${formattedDate}</td>
+            `;
+            
+            tableBody.appendChild(row);
+            
+          });
+      
+          
+          await Promise.all(quizPromises);
+        }
+        } catch (error) {
+          console.error('Error fetching user quizzes:', error);
+        }
+      }
+      
+      // Function to handle authentication state change
+      function handleAuthStateChange() {
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
             const userId = user.uid;
             localStorage.setItem("loggedInUserId", userId);
-
-            fetchUserQuizzes(userId);
-        } else {
-
+            fetchUserQuizzes(userId); // Call function to fetch quizzes
+          } else {
             console.error("No user is signed in.");
             localStorage.removeItem("loggedInUserId");
             window.location.href = "../components/homepage.html";
-        }
-    });
-
-    const logoutButton = document.getElementById('logout');
-    if (logoutButton) {
-        logoutButton.addEventListener('click', () => {
-            signOut(auth)
-                .then(() => {
-                    localStorage.removeItem('loggedInUserId');
-                    window.location.href = '../components/homepage.html';
-                })
-                .catch((error) => {
-                    console.error('Error signing out:', error);
-                });
-        });
-    } else {
-        console.error('Logout button not found');
-    }
-});
-
-function fetchUserQuizzes(userId) {
-    const userRef = doc(db, 'users', userId);
-  
-    return getDoc(userRef)
-      .then((userDoc) => {
-        if (!userDoc.exists()) {
-          throw new Error('User document not found');
-        }
-  
-        const userData = userDoc.data();
-        const quizzes = userData.quizzes || [];
-  
-        const nameElement = document.getElementById("user-Name");
-        if (nameElement) {
-          if (userData.username) {
-            nameElement.textContent = `Welcome, ${userData.username}`;
-            nameElement.style.display = "block"; // Ensure it's visible
-          } else {
-            console.error('User data does not contain a username');
           }
-        } else {
-          console.error('Element with ID "user-Name" not found');
-        }
-  
-        const tableBody = document.querySelector('#quiz-table tbody');
-        if (!tableBody) {
-          throw new Error('Quiz table body not found');
-        }
-  
-        tableBody.innerHTML = ''; // Clear existing rows
-  
-        const quizPromises = quizzes.map((quiz, index) => {
-          const quizRef = doc(db, 'quizzes', quiz.quizId);
-          return getDoc(quizRef)
-            .then((quizDoc) => {
-              if (!quizDoc.exists()) {
-                console.warn(`Quiz document ${quiz.quizId} not found`);
-                return null; // Skip to the next quiz
-              }
-  
-              const quizData = quizDoc.data();
-              const category = quizData.category || 'Unknown';
-              const questionsNumber = quizData.questions ? quizData.questions.length : 'Unknown';
-  
-              const quizDate = quiz.date && quiz.date.toDate ? quiz.date.toDate() : new Date(quiz.date);
-              const formattedDate = quizDate.toLocaleString();
-  
-              const row = document.createElement('tr');
-              row.innerHTML = `
-                <td>${index + 1}</td>
-                <td>${category}</td>
-                <td>${questionsNumber}</td>
-                <td>${quiz.score}</td>
-                <td>${JSON.stringify(quiz.result)}</td>
-                <td>${formattedDate}</td>
-              `;
-  
-              tableBody.appendChild(row);
-            })
-            .catch((error) => {
-              console.error(`Error fetching quiz ${quiz.quizId}:`, error);
-            });
         });
-  
-        return Promise.all(quizPromises);
-      })
-      .catch((error) => {
-        console.error('Error fetching user quizzes:', error);
-      });
-  }
-  
-  */
-
-  document.addEventListener('DOMContentLoaded', () => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const userId = user.uid;
-        localStorage.setItem("loggedInUserId", userId);
-  
-        fetchUserQuizzes(userId);
-      } else {
-        console.error("No user is signed in.");
-        localStorage.removeItem("loggedInUserId");
-        window.location.href = "../components/homepage.html";
       }
-    });
-  
-    const logoutButton = document.getElementById('logout');
-    if (logoutButton) {
-      logoutButton.addEventListener('click', () => {
-        signOut(auth)
-          .then(() => {
-            localStorage.removeItem('loggedInUserId');
-            window.location.href = '../components/homepage.html';
-          })
-          .catch((error) => {
-            console.error('Error signing out:', error);
+      
+      // Function to handle logout
+      function handleLogout() {
+        const logoutButton = document.getElementById('logout');
+        if (logoutButton) {
+          logoutButton.addEventListener('click', () => {
+            signOut(auth)
+              .then(() => {
+                localStorage.removeItem('loggedInUserId');
+                window.location.href = '../components/homepage.html';
+              })
+              .catch((error) => {
+                console.error('Error signing out:', error);
+              });
           });
-      });
-    } else {
-      console.error('Logout button not found');
-    }
-  });
-
-  function fetchUserQuizzes(userId) {
-    const userRef = doc(db, 'users', userId);
-  
-    return getDoc(userRef)
-      .then((userDoc) => {
-        if (!userDoc.exists()) {
-          throw new Error('User document not found');
-        }
-  
-        const userData = userDoc.data();
-        const quizzes = userData.quizzes || [];
-  
-        const nameElement = document.getElementById("user-Name");
-        if (nameElement) {
-          if (userData.username) {
-            nameElement.textContent = `Welcome, ${userData.username}`;
-            nameElement.style.display = "block"; // Ensure it's visible
-          } else {
-            console.error('User data does not contain a username');
-          }
         } else {
-          console.error('Element with ID "user-Name" not found');
+          console.error('Logout button not found');
         }
-  
-        const tableBody = document.querySelector('#quiz-table tbody');
-        if (!tableBody) {
-          throw new Error('Quiz table body not found');
-        }
-  
-        tableBody.innerHTML = ''; // Clear existing rows
-  
-        const quizPromises = quizzes.map((quiz, index) => {
-          const quizRef = doc(db, 'quizzes', quiz.quizId);
-          return getDoc(quizRef)
-            .then((quizDoc) => {
-              if (!quizDoc.exists()) {
-                console.warn(`Quiz document ${quiz.quizId} not found`);
-                return null; // Skip to the next quiz
-              }
-  
-              const quizData = quizDoc.data();
-              const category = quizData.category || 'Unknown';
-              const questionsNumber = quizData.questions ? quizData.questions.length : 'Unknown';
-              const formattedDate = quiz.date ? new Date(quiz.date.seconds * 1000).toLocaleString() : 'Unknown';
-  
-              const row = document.createElement('tr');
-              row.innerHTML = `
-                <td>${index + 1}</td>
-                <td>${category}</td>
-                <td>${questionsNumber}</td>
-                <td>${quiz.score}</td>
-                <td>${JSON.stringify(quiz.result)}</td>
-                <td>${formattedDate}</td>
-              `;
-  
-              tableBody.appendChild(row);
-            })
-            .catch((error) => {
-              console.error(`Error fetching quiz ${quiz.quizId}:`, error);
-            });
-        });
-  
-        return Promise.all(quizPromises);
-      })
-      .catch((error) => {
-        console.error('Error fetching user quizzes:', error);
+      }
+      
+      // Initialize event listeners on DOM content load
+      document.addEventListener('DOMContentLoaded', () => {
+        handleAuthStateChange();
+        handleLogout();
       });
-  }
-  
+      
