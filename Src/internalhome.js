@@ -67,8 +67,10 @@ const db = getFirestore();
             console.log(`Quiz data for ${quizId}:`, quizData);
             const category = quizData.category || 'Unknown';
             const questionsNumber = quizData.questions ? quizData.questions.length : 'Unknown';
-            const formattedDate = quiz.date ? new Date(quiz.date.seconds * 1000).toLocaleString() : 'Unknown';
-            
+            let formattedDate = 'Unknown';
+            if (quizData.date && quizData.date.seconds) {
+              formattedDate = new Date(quizData.date.seconds * 1000).toLocaleString();
+            }            
             const row = document.createElement('tr');
             row.innerHTML = `
               <td>${index + 1}</td>
