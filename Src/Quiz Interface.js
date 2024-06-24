@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let minusMarks = 0;
     let totalMarks = 0;
     let questionLength = 0;
+    let correctCount = 0;
 
     const questionText = document.getElementById("question-text");
     const optionsContainer = document.querySelector(".options-container");
@@ -120,9 +121,8 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
-
     function calculateScore() {
-        let correctCount = 0;
+       // let correctCount = 0;
         let incorrectCount = 0;
 
         isCorrect.forEach(correct => {
@@ -157,25 +157,42 @@ document.addEventListener("DOMContentLoaded", function () {
         progressBar.style.width = progress + '%';
     }
 
-    async function addQuizResult(userId, quizId, score, result) {
-        try {
-            const quizResult = {
-                quizId: quizId,
-                result: result,
-                score: score,
-                date: serverTimestamp()
-            };
-
-            await updateDoc(doc(firestore, 'users', userId), {
-                quizzes: arrayUnion(quizResult)
+    function addQuizResult(userId, quizId, score, result) {
+        return new Promise((resolve, reject) => {
+            const userRef = doc(firestore, 'users', userId);
+    
+            getDoc(userRef).then((userDoc) => {
+                if (!userDoc.exists()) {
+                    const error = new Error(`User document with ID ${userId} not found`);
+                    console.error('Error adding quiz result:', error);
+                    reject(error);
+                    return;
+                }
+    
+                const quizResult = {
+                    quizId: quizId,
+                    result: result,
+                    score: score,
+                    date: Date.now()
+                };
+    
+                updateDoc(userRef, {
+                    quizzes: arrayUnion(quizResult)
+                }).then(() => {
+                    console.log('Quiz result added for user:', userId);
+                    resolve(); // Resolve the promise on success
+                }).catch((error) => {
+                    console.error('Error adding quiz result:', error);
+                    reject(error); // Reject the promise if there's an error during update
+                });
+    
+            }).catch((error) => {
+                console.error('Error fetching user document:', error);
+                reject(error); // Reject the promise if there's an error fetching the document
             });
-
-            console.log('Quiz result added for user:', userId);
-        } catch (error) {
-            console.error('Error adding quiz result:', error);
-            throw error;
-        }
+        });
     }
+    
 
     prevBtn.addEventListener("click", function () {
         if (currentQuestionIndex > 0) {
@@ -198,6 +215,6 @@ document.addEventListener("DOMContentLoaded", function () {
     submitBtn.addEventListener("click", function () {
         clearInterval(timerInterval);
         calculateScore();
-        addQuizResult(localStorage.getItem("LoggedInUserId"), quizId, correctCount, totalMarks);
+        addQuizResult(localStorage.getItem("loggedInUserId"), quizId, correctCount, totalMarks);
     });
 });
