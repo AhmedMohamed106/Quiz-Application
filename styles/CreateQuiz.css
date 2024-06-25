@@ -75,3 +75,9 @@ body{
     color: rgb(63, 2, 45);
     opacity: 1;
   }
+  a:link,
+  a:visited,
+  a:hover {
+      text-decoration: none;
+      color:#fff; /* Make sure the color does not change on hover */
+  }

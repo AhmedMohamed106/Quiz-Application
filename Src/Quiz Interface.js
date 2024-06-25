@@ -133,13 +133,12 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
-        totalMarks = (correctCount * correctMarks) - (incorrectCount * minusMarks);
-        let overallMarks = (correctMarks * questionLength);
+        totalMarks = Math.ceil((correctCount / questionLength) * 100)+"%"; //(correctCount * correctMarks) - (incorrectCount * minusMarks);
 
         correctAnswersElement.textContent = `Correct Answers: ${correctCount}`;
         incorrectAnswersElement.textContent = `Incorrect Answers: ${incorrectCount}`;
         totalScoreElement.textContent = `Total Score: ${correctCount} out of ${questions.length}`;
-        totalDegreeElement.textContent = `Total Degree: ${totalMarks} out of ${overallMarks}`;
+        totalDegreeElement.textContent = `Total Degree: ${totalMarks}`;
 
         document.querySelector('.quiz-container').style.display = 'none';
         timerElement.style.display = 'none';

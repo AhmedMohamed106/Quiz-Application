@@ -67,18 +67,30 @@ const db = getFirestore();
             console.log(`Quiz data for ${quizId}:`, quizData);
             const category = quizData.category || 'Unknown';
             const questionsNumber = quizData.questions ? quizData.questions.length : 'Unknown';
-            let formattedDate = 'Unknown';
-            if (quizData.date && quizData.date.seconds) {
-              formattedDate = new Date(quizData.date.seconds * 1000).toLocaleString();
-            }            
+            const date = new Date(quiz.date);
+
+            // Extract the day, month, and year
+            const day = date.getDate().toString().padStart(2, '0');
+            const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-indexed
+            const year = date.getFullYear();
+
+            // Extract the time components
+            const hours = date.getHours().toString().padStart(2, '0');
+            const minutes = date.getMinutes().toString().padStart(2, '0');
+            const seconds = date.getSeconds().toString().padStart(2, '0');
+
+            // Format the date and time as MM/DD/YYYY HH:MM:SS
+            const formattedDateTime = `${month}/${day}/${year} ${hours}:${minutes}:${seconds}`;
+
+              
             const row = document.createElement('tr');
             row.innerHTML = `
               <td>${index + 1}</td>
               <td>${category}</td>
               <td>${questionsNumber}</td>
               <td>${quiz.score}</td>
-              <td>${JSON.stringify(quiz.result)}</td>
-              <td>${formattedDate}</td>
+              <td>${(quiz.result)}</td>
+              <td>${formattedDateTime}</td>
             `;
             
             tableBody.appendChild(row);
