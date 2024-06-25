@@ -1,6 +1,7 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: rgb(255, 230, 249);
+    background-image: url('../assets/images/IMG-20240625-WA0108.jpg');
+    background-size: cover;
 }
 nav{
   background-color: #770550 !important;
